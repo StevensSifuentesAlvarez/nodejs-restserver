@@ -1,5 +1,6 @@
 const express = require('express')
-const cors = require('cors')
+const cors = require('cors');
+const { connection } = require('../database/config');
 
 class Server {
 
@@ -8,12 +9,19 @@ class Server {
         this.port = process.env.PORT;
         this.usersPath = '/api/usuarios'
 
+        // Conectar a base de datos
+        this.connectionDB();
+
         /* Funciones que van a añadir otras funcionalidades a mi Webserver.
         Función que se va a ajecutar siempre que levantemos nuestro servidor */
         this.middlewares();
     
         // Rutas de mi aplicación
         this.routes();
+    }
+
+    async connectionDB() {
+        await connection()
     }
 
     routes() {
