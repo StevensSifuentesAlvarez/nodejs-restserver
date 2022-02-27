@@ -38,7 +38,13 @@ const userSchema = new Schema({
 // userSchema.plugin(mongooseHidden)
 
 // Segunda opción
-userSchema.plugin(mongooseHidden, { hidden: {_id: false, __v: false, password: true}})
+userSchema.plugin(mongooseHidden, { hidden: {_id: false, password: true}})
+
+// Tercera opción
+/* userSchema.methods.toJSON = function() {
+    const { __v, password, ...user } = this.toObject()
+    return user
+} */
 
 // El primer parametro es el nombre de la colección
 module.exports = model('User', userSchema)

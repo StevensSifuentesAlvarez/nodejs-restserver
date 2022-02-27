@@ -1,5 +1,4 @@
 const bcryptjs = require('bcryptjs')
-const { validationResult } = require('express-validator')
 const User = require('../models/user')
 
 const getUsers = (req, res) => {
@@ -16,14 +15,6 @@ const postUsers = async (req, res) => {
     
     // Creación de la instancia
     const user = new User({ name, email, password, role })
-    
-    // Verificar si el correo existe
-    const emailExists = await User.findOne({ email })
-    if (emailExists) {
-        return res.status(400).json({
-            msg: 'Correo ya registrado. Intente con otra.'
-        })
-    }
 
     // Encriptar la contraseña
     const salt = bcryptjs.genSaltSync()
