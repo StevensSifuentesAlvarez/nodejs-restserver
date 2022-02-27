@@ -24,10 +24,6 @@ class Server {
         await connection()
     }
 
-    routes() {
-        this.app.use(this.usersPath, require('../routes/users'))
-    }
-
     middlewares(){
         /* CORS */
         // Nos permite proteger nuestro servidor, relativamente superficial
@@ -42,6 +38,11 @@ class Server {
         // Directorio público
         this.app.use(express.static('public'))
     }
+    
+    routes() {
+        this.app.use(this.usersPath, require('../routes/users'))
+    }
+
 
     listen() {
         this.app.listen(this.port, () => console.log(`Corriendo en el puerto ${this.port}`))
