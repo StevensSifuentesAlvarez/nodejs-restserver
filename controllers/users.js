@@ -9,7 +9,6 @@ const getUsers = (req, res) => {
 }
 
 const postUsers = async (req, res) => {
-
     // Desestructuramos los valores requeridos
     const { name, email, password, role } = req.body
     
@@ -29,10 +28,24 @@ const postUsers = async (req, res) => {
     })
 }
 
-const putUsers = (req, res) => {
+const putUsers = async (req, res) => {
+
+    const { id } = req.params
+    const { _id, password, google, email, ...resto } = req.body    
+    // TODO: Validar contra base de datos
+    if (password) {
+        // Encriptar la contraseña
+        const salt = bcryptjs.genSaltSync()
+        resto.password = bcryptjs.hashSync(password, salt)
+    }
+
+    // The third param is to allow the return of the new object into the DB - after update
+    const usuario = await User.findByIdAndUpdate(id, resto, {new: true})
+    // const usuario = await User.findOneAndUpdate(id, resto, {new: true})
+
     res.json({
-        id: 1,
-        message: 'Método put - controlador'
+        message: 'Método put - controlador',
+        usuario
     })
 }
 
