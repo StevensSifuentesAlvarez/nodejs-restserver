@@ -1,10 +1,15 @@
 const bcryptjs = require('bcryptjs')
 const User = require('../models/user')
 
-const getUsers = (req, res) => {
+const getUsers = async (req, res) => {
+
+    // Paginamos
+    const { limite=5, desde=0 } = req.query;
+    const users = await User.find()
+        .skip(Number(desde))
+        .limit(Number(limite))
     res.status(200).json({
-        id: 1,
-        message: 'Método get - controlador'
+        users
     })
 }
 
@@ -22,10 +27,7 @@ const postUsers = async (req, res) => {
     // Para guardar en MongoCompass
     await user.save()
 
-    res.json({
-        message: 'Método post - controlador',
-        user,
-    })
+    res.json(user)
 }
 
 const putUsers = async (req, res) => {
