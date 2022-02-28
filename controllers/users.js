@@ -4,7 +4,7 @@ const User = require('../models/user')
 const getUsers = async (req, res) => {
     // Paginamos
     const { limite=5, desde=0 } = req.query;
-    const query = {estado: true}
+    const query = {state: true}
 
     const [total, users] = await Promise.all([
         User.countDocuments(query),
@@ -64,11 +64,17 @@ const patchUsers = (req, res) => {
     });
 }
 
-const deleteUsers = (req, res) => {
-    res.json({
-        id: 1,
-        message: 'Método delete - controlador'
-    })
+const deleteUsers = async (req, res) => {
+    const { id } = req.params
+
+    // Eliminando fisicamente de la base de datos
+    // const user = await User.findByIdAndDelete(id)
+
+    // Cambiando de estado
+    // Mantenemos la integridad referencial
+    const user = await User.findByIdAndUpdate(id, { state: false }, {new: true})
+
+    res.json(user)
 }
 
 module.exports = {
