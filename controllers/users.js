@@ -2,13 +2,20 @@ const bcryptjs = require('bcryptjs')
 const User = require('../models/user')
 
 const getUsers = async (req, res) => {
-
     // Paginamos
     const { limite=5, desde=0 } = req.query;
-    const users = await User.find()
+    const query = {estado: true}
+
+    const [total, users] = await Promise.all([
+        User.countDocuments(query),
+        User.find(query)
         .skip(Number(desde))
         .limit(Number(limite))
+    ])
+
     res.status(200).json({
+        status: 200,
+        total, 
         users
     })
 }
