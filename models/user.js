@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose')
-const mongooseHidden = require('mongoose-hidden')()
+// const mongooseHidden = require('mongoose-hidden')()
 
 const userSchema = new Schema({
     name: {
@@ -32,19 +32,19 @@ const userSchema = new Schema({
     google: {
         type: Boolean,
         default: false
-    }
+    },
 })
 // Primera opción
 // userSchema.plugin(mongooseHidden)
 
 // Segunda opción
-userSchema.plugin(mongooseHidden, { hidden: {_id: false, password: true}})
+// userSchema.plugin(mongooseHidden, { hidden: {_id: false, password: true}})
 
 // Tercera opción
-/* userSchema.methods.toJSON = function() {
-    const { __v, password, ...user } = this.toObject()
+userSchema.methods.toJSON = function() {
+    const { __v, password, _id, ...user } = this.toObject()
+    user.uid = _id
     return user
-} */
-
+}
 // El primer parametro es el nombre de la colección
 module.exports = model('User', userSchema)

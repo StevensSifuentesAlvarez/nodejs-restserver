@@ -69,11 +69,13 @@ const deleteUsers = async (req, res) => {
 
     // Eliminando fisicamente de la base de datos
     // const user = await User.findByIdAndDelete(id)
-
+    
     // Cambiando de estado
     // Mantenemos la integridad referencial
     const user = await User.findByIdAndUpdate(id, { state: false }, {new: true})
-
+    
+    // const authUser = req.authUser
+    
     res.json(user)
 }
 
