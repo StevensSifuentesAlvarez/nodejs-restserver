@@ -5,6 +5,8 @@ const connection = async () => {
         await mongoose.connect(process.env.MONGO_CNN, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
+            useCreateIndex: true,
+            useFindAndModify: false
         })
 
         console.log('Base de datos online')
