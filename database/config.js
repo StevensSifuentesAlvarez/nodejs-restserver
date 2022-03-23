@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const connection = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_CNN, {
+        await mongoose.connect(process.env.MONGODB_CNN, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
@@ -10,7 +10,7 @@ const connection = async () => {
         console.log('Base de datos online')
     } catch (error) {
         console.log(error)
-        throw new Error('Conección NO realizada')
+        throw new Error('Error a la hora de iniciar la base de datos')
     }
 }
 
