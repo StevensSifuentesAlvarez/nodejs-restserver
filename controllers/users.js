@@ -40,7 +40,7 @@ const postUsers = async (req, res) => {
 const putUsers = async (req, res) => {
 
     const { id } = req.params
-    const { _id, password, google, email, ...resto } = req.body    
+    const { _id, password, google, email, ...resto } = req.body
     // TODO: Validar contra base de datos
     if (password) {
         // Encriptar la contraseña

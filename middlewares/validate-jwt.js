@@ -32,7 +32,7 @@ const validateJWT = async (req=request, res=response, next) => {
                 msg: 'Usuario no válido - usuario con state: false'
             })
         }
-
+        
         req.authUser = authUser
         
         next()

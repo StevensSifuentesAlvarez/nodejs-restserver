@@ -1,6 +1,5 @@
 const bcryptjs = require('bcryptjs')
 const { response } = require('express')
-const { json } = require('express/lib/response')
 const { generateJWT } = require('../helpers/generate-jwt')
 const { googleVerify } = require('../helpers/google-verify')
 const User = require('../models/user')
@@ -91,9 +90,9 @@ const googleSignIn = async (req, res=response) => {
         })
         
     } catch (error) {
-        res.status(400),json({
+        res.status(400).json({
             ok: false,
-            msg: 'El token no se údo verificar'
+            msg: 'El token no se pudo verificar'
         })
     }
 }
